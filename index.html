@@ -81,6 +81,74 @@ Examples:
 					</code></pre>
 				</section>
 
+        <section>
+          <h2>Good example</h2>
+						<pre><code data-trim contenteditable>
+Feature: User profile
+  In order to be able to view an user profile
+  As an anonymous user
+  We need to be able to have access to an user profile page
+
+  @api
+  Scenario Outline: Visit user profile page.
+    Given I logging in as "admin"
+    When  I visit "&lt;url&gt;"
+    Then  I should see "&lt;name&gt;" under profile
+    And   I should see "&lt;country&gt;" under profile
+    And   I should see "&lt;date&gt;" under profile
+    And   I should see "&lt;groups&gt;" under groups
+
+  Examples:
+    | url                            | name                      | country        | date         | groups                                                                                                                    |
+    | people/detail/celinejrc        | Celine Dondeynaz          | italy          | October 2008 | African Renewable Energy Technology Platform; EUWI Africa; EUWI Coordination Group and Secretariat; EUWI Eastern Europe   |
+    | people/detail/ray-holland      | Holland Ray               | United Kingdom | January 2015 | African Renewable Energy Technology Platform - AFRETEP                                                                    |
+    | people/detail/makuwa           | MOISE MAKUWA              | Burundi        | January 2015 | African Renewable Energy Technology Platform - AFRETEP                                                                    |
+    | people/detail/vladimir-garaba  | Garaba vladimir           |                | January 2015 | EUWI Community Space; EUWI Eastern Europe, Caucasus and Central Asia;                                                     |
+    | people/detail/arevik-hovsepyan | Hovsepyan arevik          |                | January 2015 | EUWI Community Space; EUWI Eastern Europe, Caucasus and Central Asia;                                                     |
+            </code></pre>
+        </section>
+
+
+        <section>
+          <h2>Simple PHP</h2>
+          <small>If something is wrong just throw an Exception</small>
+						<pre><code data-trim contenteditable>
+/**
+ * @Then I should see :groups under groups
+ */
+public function iShouldSeeUnderGroups($groups) {
+  $groups = explode(';', $groups);
+  foreach ($groups as $group) {
+    $group = trim($group);
+    $this->assertElementContains('#block-views-ec', $group);
+  }
+}
+            </code></pre>
+        </section>
+
+        <section>
+          <h2>Bad example</h2>
+						<pre><code data-trim contenteditable>
+  @api
+  Scenario Outline: Visit user profile page.
+    Given I logging in as "admin"
+    When  I visit "&lt;url&gt;"
+    Then  I should see "&lt;name&gt;" under profile
+    And   I should see "&lt;country&gt;" under profile
+    And   I should see "&lt;date&gt;" under profile
+    And   I should see "&lt;groups&gt;" under groups
+
+  Examples:
+    | url                            | name                      | country        | date         | groups                                                                                                                    |
+    | people/detail/celinejrc        | Celine Dondeynaz          | italy          | October 2008 | African Renewable Energy Technology Platform; EUWI Africa; EUWI Coordination Group and Secretariat; EUWI Eastern Europe   |
+    | people/detail/ray-holland      | Holland Ray               | United Kingdom | January 2015 | African Renewable Energy Technology Platform - AFRETEP                                                                    |
+    | people/detail/makuwa           | MOISE MAKUWA              | Burundi        | January 2015 | African Renewable Energy Technology Platform - AFRETEP                                                                    |
+    | people/detail/vladimir-garaba  | Garaba vladimir           |                | January 2015 | EUWI Community Space; EUWI Eastern Europe, Caucasus and Central Asia;                                                     |
+    | people/detail/arevik-hovsepyan | Hovsepyan arevik          |                | January 2015 | EUWI Community Space; EUWI Eastern Europe, Caucasus and Central Asia;                                                     |
+            </code></pre>
+        </section>
+
+
 				<section>
           <h2>PhantomCSS</h2>
 						<pre><code data-trim contenteditable>
