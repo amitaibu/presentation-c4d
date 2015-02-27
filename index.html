@@ -42,196 +42,141 @@
 
 			<div class="slides">
 				<section>
-					<h1>QA</h1>
-					<h3>How to suck less</h3>
+					<h1>Capacity4Dev</h1>
+					<h3>How to build a modern platform</h3>
 				</section>
 
-				<section>
-					<h2>Guidelines</h2>
-					<ul>
-						<li>Keep it simple</li>
-						<li>At least one test per day</li>
-						<li>Not more than one hour a day</li>
-						<li>Access always comes with tests</li>
-					</ul>
-				</section>
+        <section>
+          <h2>It's 2015</h2>
+        </section>
+
+        <section>
+          <h2>Best practices</h2>
+          <ul>
+            <li>Transparency</li>
+            <li>Work on my computer syndrome</li>
+            <li>Automatic testing</li>
+            <li>We are part of a community</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2>Pull Requests</h2>
+          <div>
+            <img src="assets/pr.jpg" />
+          </div>
+        </section>
+
+        <section>
+          <h2>Best practices</h2>
+          <ul>
+            <li>Transparency</li>
+            <li>Work on my computer syndrome</li>
+            <li>Automatic testing</li>
+            <li>We are part of a community</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2>Installation profile</h2>
+          <small>Everything in code</small>
+          <div>
+            <img src="assets/profile.png" />
+          </div>
+        </section>
 
 
-				<section>
-					<h2>Behat</h2>
+        <section>
+          <h2>Best practices</h2>
+          <ul>
+            <li>Transparency</li>
+            <li>Work on my computer syndrome</li>
+            <li>Automatic testing</li>
+            <li>We are part of a community</li>
+          </ul>
+        </section>
+
+        <section>
+            <h2>Contributions</h2>
+            <ul>
+              <li>Organic groups</li>
+              <li>Message stack</li>
+              <li>Entity reference</li>
+              <li>Pluggable node access</li>
+              <li>csv2sql</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>RESTful server</h2>
+            <small>https://example.com/api</small>
+            <div>
+                <img src="assets/restful.png" />
+            </div>
+        </section>
+
+        <section>
+            <h2>Quick Post & Activity Stream</h2>
+            <small>Because we all hate Form API</small>
+            <div>
+                <img src="assets/quick-post.gif" />
+            </div>
+        </section>
+
+        <section>
+            <h2>Re-using code</h2>
+            <small>Because we all love Form API</small>
+            <div>
+                <img src="assets/full-form.gif" />
+            </div>
+        </section>
+
+        <section>
+          <h2>Behat</h2>
 					<pre><code data-trim contenteditable>
-Feature: Blog post
-In order to be able to view a blog post
-As an anonymous user
-We need to be able to have access to a blog post page
+Feature: Group dashboard
+  As a group member and non-member
+  In order to see the group latest activity and information
+  I need to be able to see a dashboard with different widgets
 
 @api
-Scenario Outline: Visit blog post page
-Given I am an anonymous user
-When  I visit "&lt;url&gt;"
-Then  I should the text "&lt;text&gt;" under the main content
-And   I should see the author "&lt;author&gt;"
-
-Examples:
-| url                                          | text                    | author          |
-| content/automatic-qa/                        | Here is a known fact    | Amitai Burstein |
-| content/phantomcss-ui-regression/            | What's fun about having | Amitai Burstein |
-| content/backend-free-apps-grunt-jekyll-d3js/ | When we started working | Carlos Mantilla |
-
-					</code></pre>
-				</section>
-
-        <section>
-          <h2>Good example</h2>
-						<pre><code data-trim contenteditable>
-Feature: User profile
-  In order to be able to view an user profile
-  As an anonymous user
-  We need to be able to have access to an user profile page
-
-  @api
-  Scenario Outline: Visit user profile page.
-    Given I logging in as "admin"
-    When  I visit "&lt;url&gt;"
-    Then  I should see "&lt;name&gt;" under profile
-    And   I should see "&lt;country&gt;" under profile
-    And   I should see "&lt;date&gt;" under profile
-    And   I should see "&lt;groups&gt;" under groups
-
-  Examples:
-    | url                            | name                      | country        | date         | groups                                                                                                                    |
-    | people/detail/celinejrc        | Celine Dondeynaz          | italy          | October 2008 | African Renewable Energy Technology Platform; EUWI Africa; EUWI Coordination Group and Secretariat; EUWI Eastern Europe   |
-    | people/detail/ray-holland      | Holland Ray               | United Kingdom | January 2015 | African Renewable Energy Technology Platform - AFRETEP                                                                    |
-    | people/detail/makuwa           | MOISE MAKUWA              | Burundi        | January 2015 | African Renewable Energy Technology Platform - AFRETEP                                                                    |
-    | people/detail/vladimir-garaba  | Garaba vladimir           |                | January 2015 | EUWI Community Space; EUWI Eastern Europe, Caucasus and Central Asia;                                                     |
-    | people/detail/arevik-hovsepyan | Hovsepyan arevik          |                | January 2015 | EUWI Community Space; EUWI Eastern Europe, Caucasus and Central Asia;                                                     |
-            </code></pre>
-        </section>
-
-
-        <section>
-          <h2>Simple PHP</h2>
-          <small>If something is wrong just throw an Exception</small>
-						<pre><code data-trim contenteditable>
-/**
- * @Then I should see :groups under groups
- */
-public function iShouldSeeUnderGroups($groups) {
-  $groups = explode(';', $groups);
-  foreach ($groups as $group) {
-    $group = trim($group);
-    $this->assertElementContains('#block-views-ec', $group);
-  }
-}
-            </code></pre>
+Scenario: Check dashboard is not accessible for not member of the group with restricted access.
+  Given I am logged in as user "mariecurie"
+  When  I change access of group "Movie Popcorn Corner" to "Restricted"
+  And   I am logged in as user "isaacnewton"
+  And   I visit the dashboard of group "Movie Popcorn Corner"
+  Then  I should see "Access denied"
+          </code></pre>
         </section>
 
         <section>
-          <h2>Bad example</h2>
-						<pre><code data-trim contenteditable>
-  @api
-  Scenario Outline: Visit user profile page.
-    Given I logging in as "admin"
-    When  I visit "&lt;url&gt;"
-    Then  I should see "&lt;name&gt;" under profile
-    And   I should see "&lt;country&gt;" under profile
-    And   I should see "&lt;date&gt;" under profile
-    And   I should see "&lt;groups&gt;" under groups
-
-  Examples:
-    | url                            | name                      | country        | date         | groups                                                                                                                    |
-    | people/detail/celinejrc        | Celine Dondeynaz          | italy          | October 2008 | African Renewable Energy Technology Platform; EUWI Africa; EUWI Coordination Group and Secretariat; EUWI Eastern Europe   |
-    | people/detail/ray-holland      | Holland Ray               | United Kingdom | January 2015 | African Renewable Energy Technology Platform - AFRETEP                                                                    |
-    | people/detail/makuwa           | MOISE MAKUWA              | Burundi        | January 2015 | African Renewable Energy Technology Platform - AFRETEP                                                                    |
-    | people/detail/vladimir-garaba  | Garaba vladimir           |                | January 2015 | EUWI Community Space; EUWI Eastern Europe, Caucasus and Central Asia;                                                     |
-    | people/detail/arevik-hovsepyan | Hovsepyan arevik          |                | January 2015 | EUWI Community Space; EUWI Eastern Europe, Caucasus and Central Asia;                                                     |
-            </code></pre>
+          <h2>TravisCI</h2>
+          <div>
+            <img src="assets/travis.jpg" />
+          </div>
         </section>
 
         <section>
-          <h2>Testing JavaScript</h2>
-          <small>Example from Hedley</small>
-						<pre><code data-trim contenteditable>
-Feature: User login
-  In order to be able to be recognized by the site
-  As an anonymous user
-  We need to be able to login to the site
-
-  @javascript
-  Scenario: Login to site, and check access to the homepage.
-    Given I login with user "admin"
-     When I visit "/#/dashboard/1/events"
-     Then I should wait for the text "demo (2)" to "appear"
-            </code></pre>
+          <h2>Logs</h2>
+          <div>
+            <img src="assets/logstash.jpg" />
+          </div>
         </section>
 
         <section>
-          <h2>Testing JavaScript</h2>
-          <small>Waiting for element</small>
-						<pre><code data-trim contenteditable>
-/**
- * Wait for an element by its XPath to appear or disappear.
- *
- * @param string $xpath
- *   The XPath string.
- * @param bool $appear
- *   Determine if element should appear. Defaults to TRUE.
- *
- * @throws Exception
- */
-private function waitForXpathNode($xpath, $appear = TRUE) {
-  $this->waitFor(function($context) use ($xpath, $appear) {
-      try {
-        $nodes = $context->getSession()->getDriver()->find($xpath);
-        if (count($nodes) > 0) {
-          $visible = $nodes[0]->isVisible();
-          return $appear ? $visible : !$visible;
-        }
-        return !$appear;
-      }
-      catch (WebDriver\Exception $e) {
-        if ($e->getCode() == WebDriver\Exception::NO_SUCH_ELEMENT) {
-          return !$appear;
-        }
-        throw $e;
-      }
-    });
-}
-            </code></pre>
+          <h2>Real time alerts </h2>
+          <div>
+            <img src="assets/loggly.jpg" />
+          </div>
         </section>
 
-
-				<section>
-          <h2>PhantomCSS</h2>
-						<pre><code data-trim contenteditable>
-casper.start('http://localhost/sekelton/www');
-casper.then(function() {
-  // ...
-
-  this.echo('Verify the tags cloud box');
-  phantomcss.screenshot('.tags-cloud-wrapper', 'tags-cloud-wrapper');
-});
-
-// Check hover.
-casper.then(function() {
-    this.echo('Verify tags cloud - hover');
-    this.mouse.move('.tags-cloud li a');
-    phantomcss.screenshot('.tags-cloud li a', 'tags-cloud-hover');
-});
-						</code></pre>
-				</section>
-
-				<section>
-					<div>
-						<div>Tags wrapper</div>
-						<img src="assets/phantomcss/image1.jpg" />
-					</div>
-
-					<div>
-						<div>Hover</div>
-						<img src="assets/phantomcss/image2.jpg" />
-					</div>
-				</section>
+        <section>
+          <h2>Migrate</h2>
+          <small>Getting your own data in</small>
+          <div>
+            <img src="assets/migrate.jpg" />
+          </div>
+        </section>
 
 			</div>
 
